@@ -19,6 +19,7 @@ export function getCanvas() { return canvas; }
 export function getCtx() { return ctx; }
 export function getSize() { return { W, H }; }
 export function getZoom() { return zoom; }
+export function setZoom(value) { zoom = targetZoom = Math.max(0.4, Math.min(2.5, value)); }
 export function getCam() { return { x: camX, y: camY }; }
 export function getMouse() { return { x: mouseX, y: mouseY }; }
 
@@ -101,6 +102,7 @@ function initControls() {
   // Arrow key panning
   const keysDown = new Set();
   window.addEventListener('keydown', e => {
+    if (e.target?.closest?.('input, textarea, select, [contenteditable="true"]')) return;
     if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
       e.preventDefault();
       keysDown.add(e.key);
